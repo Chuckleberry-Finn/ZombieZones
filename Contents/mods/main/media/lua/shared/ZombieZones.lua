@@ -6,7 +6,7 @@ zombieZones.Zone = {
     --Required values: coordinates, which is a table of x1, y1, x2, y2
     coordinates={x1=-1, y1=-1, x2=-1, y2=-1},
 
-    walkTypeChance={sprinter=0, fastShambler=0, shambler=0},
+    speed={sprinter=0, fastShambler=0, shambler=0},
     canCrawlUnderVehicle="true",
     dayNightActivity={start=1,stop=24},
 
