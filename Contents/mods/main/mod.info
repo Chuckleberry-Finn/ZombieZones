@@ -1,8 +1,9 @@
-id=ChuckTemplate
-name=ChuckTemplate
+id=ZombieZones
+name=ZombieZones
 description= 
 poster=poster.png
 tags=Build 41
 versionMin=41.0
+require=ZoneAPIChucked
 
 
