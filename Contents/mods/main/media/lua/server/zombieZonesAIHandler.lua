@@ -69,18 +69,17 @@ function zombieZonesAIHandler.onUpdate(zombie)
     local zombieSpeed = zombieModData.ZombieZonesSpeed
     if zombieSpeed == nil then
 
-        local sprinterChance = zone.walkTypeChance.sprinter
-        local fastShamblerChance = zone.walkTypeChance.fastShambler
-        local shamblerChance = zone.walkTypeChance.shambler
+        local sprinterChance = zone.speed.sprinter
+        local fastShamblerChance = zone.speed.fastShambler
+        local shamblerChance = zone.speed.shambler
 
         local speedDetermined = ((ZombRand(101) < sprinterChance) and "sprint"..ZombRand(1,6)) or
                 ((ZombRand(101) < fastShamblerChance) and ZombRand(1,6)) or
                 ((ZombRand(101) < shamblerChance) and "slow"..ZombRand(1,4))
 
         zombieModData.ZombieZonesSpeed = speedDetermined
-    else
-        zombie:setWalkType(zombieModData.ZombieZonesSpeed)
     end
+    if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
 
     local canCrawlUnderVehicle = zone.canCrawlUnderVehicle and (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) or SandboxVars.ZombieLore.CrawlUnderVehicle
     zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
