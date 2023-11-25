@@ -1,13 +1,11 @@
 local zombieZonesAIHandler = {}
 
---speed
 --strength
 --toughness
 --transmission
 --infectionmortality
 --reanimatetime
 --cognition
---crawlundervehicle
 --memory
 --sight
 --hearing
@@ -15,29 +13,12 @@ local zombieZonesAIHandler = {}
 --dragDown
 --fenceLunge
 --fakeDead
-
---setCanCrawlUnderVehicle
-
---      WT1("1"),
---      WT2("2"),
---      WT3("3"),
---      WT4("4"),
---      WT5("5"),
---      WTSprint1("sprint1"),
---      WTSprint2("sprint2"),
---      WTSprint3("sprint3"),
---      WTSprint4("sprint4"),
---      WTSprint5("sprint5"),
---      WTSlow1("slow1"),
---      WTSlow2("slow2"),
---      WTSlow3("slow3");
-
---zombie:setWalkType("sprint1")
---zombie:setNoTeeth(true)
---zombie:setWalkType("slow1")
---zombie:setCanWalk(true)
-
 --if zombie:isCrawling() then zombie:toggleCrawling() end
+
+--        if (this.memory == -1 && var1 == 1 || var2 == 0) {this.memory = 1250;}
+--        if (this.memory == -1 && var1 == 2 || var2 == 1) {this.memory = 800;}
+--        if (this.memory == -1 && var1 == 3 || var2 == 2) {this.memory = 500;}
+--        if (this.memory == -1 && var1 == 4 || var2 == 3) {this.memory = 25;}
 
 require "zoneEditor"
 function zombieZonesAIHandler.getZone(zombie)
@@ -73,9 +54,9 @@ function zombieZonesAIHandler.onUpdate(zombie)
         local fastShamblerChance = zone.speed.fastShambler
         local shamblerChance = zone.speed.shambler
 
-        local speedDetermined = ((ZombRand(101) < sprinterChance) and "sprint"..ZombRand(1,6)) or
-                ((ZombRand(101) < fastShamblerChance) and ZombRand(1,6)) or
-                ((ZombRand(101) < shamblerChance) and "slow"..ZombRand(1,4))
+        local speedDetermined = ((ZombRand(1,101) <= sprinterChance) and "sprint"..ZombRand(1,6)) or
+                ((ZombRand(1,101) <= fastShamblerChance) and ZombRand(1,6)) or
+                ((ZombRand(1,101) <= shamblerChance) and "slow"..ZombRand(1,4))
 
         zombieModData.ZombieZonesSpeed = speedDetermined
     end
