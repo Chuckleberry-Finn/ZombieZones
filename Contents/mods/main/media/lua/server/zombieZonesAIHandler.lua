@@ -25,6 +25,29 @@ function zombieZonesAIHandler.getZone(zombie)
 end
 
 
+zombieZonesAIHandler.walkTypes = {
+    sprinter={id="sprint",rand=5},
+    fastShambler={id="",rand=5},
+    shambler={id="slow",rand=3},
+}
+
+function zombieZonesAIHandler.rollForSpeed(zone)
+    local speeds = { sprinter=zone.speed.sprinter, fastShambler=zone.speed.fastShambler, shambler=zone.speed.shambler}
+
+    local weight = 0
+    for _,chance in pairs(speeds) do weight = weight + (chance) end
+    local rand = ZombRand(1, weight+1)
+
+    weight = 0
+    for speed,chance in pairs(speeds) do
+        weight = weight + (chance)
+        if weight >= rand then
+            return zombieZonesAIHandler.walkTypes[speed].id..ZombRand(1,zombieZonesAIHandler.walkTypes[speed].rand)+1
+        end
+    end
+end
+
+
 ---@param zombie IsoZombie|IsoGameCharacter|IsoMovingObject|IsoObject
 function zombieZonesAIHandler.onUpdate(zombie)
     ---zombie mod data is not saved unless it's a reanimated player
@@ -34,18 +57,7 @@ function zombieZonesAIHandler.onUpdate(zombie)
     if not zone then return end
 
     local zombieSpeed = zombieModData.ZombieZonesSpeed
-    if zombieSpeed == nil then
-
-        local sprinterChance = zone.speed.sprinter
-        local fastShamblerChance = zone.speed.fastShambler
-        local shamblerChance = zone.speed.shambler
-
-        local speedDetermined = ((ZombRand(1,101) <= sprinterChance) and "sprint"..ZombRand(1,6)) or
-                ((ZombRand(1,101) <= fastShamblerChance) and ZombRand(1,6)) or
-                ((ZombRand(1,101) <= shamblerChance) and "slow"..ZombRand(1,4))
-
-        zombieModData.ZombieZonesSpeed = speedDetermined
-    end
+    if zombieSpeed == nil then zombieModData.ZombieZonesSpeed = zombieZonesAIHandler.rollForSpeed(zone) end
     if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
 
     local canCrawlUnderVehicle = zone.canCrawlUnderVehicle and (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) or SandboxVars.ZombieLore.CrawlUnderVehicle
@@ -57,8 +69,9 @@ function zombieZonesAIHandler.onUpdate(zombie)
     zombie:makeInactive(not shouldBeActive)
 
     if getDebug() then
+
         zombie:addLineChatElement(tostring(zombie:getID()).." _ "..tostring(zombie:getOnlineID())..
-                "\nattachedItems: "..zombie:getAttachedItems():size()..
+                "\npersistentOutfitID:"..zombie:getPersistentOutfitID()..
                 "\nspeed:"..tostring(zombieModData.ZombieZonesSpeed)..
                 "\ncanCrawlUnderVehicle:"..tostring(canCrawlUnderVehicle))
     end
