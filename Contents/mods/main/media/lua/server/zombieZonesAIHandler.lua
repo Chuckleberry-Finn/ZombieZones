@@ -67,7 +67,7 @@ function zombieZonesAIHandler.onUpdate(zombie)
     if not zone then return end
 
     local zombieSpeed = zombieModData.ZombieZonesSpeed
-    if not zombieSpeed then
+    if zombieSpeed == nil then
 
         local sprinterChance = zone.walkTypeChance.sprinter
         local fastShamblerChance = zone.walkTypeChance.fastShambler
