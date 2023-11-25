@@ -1,20 +1,6 @@
 local zombieZonesAIHandler = {}
 
---strength
---toughness
---transmission
---infectionmortality
---reanimatetime
---cognition
---memory
---sight
---hearing
---day/night
---dragDown
---fenceLunge
---fakeDead
---if zombie:isCrawling() then zombie:toggleCrawling() end
-
+--strength, toughness, transmission, cognition, sight, hearing
 --        if (this.memory == -1 && var1 == 1 || var2 == 0) {this.memory = 1250;}
 --        if (this.memory == -1 && var1 == 2 || var2 == 1) {this.memory = 800;}
 --        if (this.memory == -1 && var1 == 3 || var2 == 2) {this.memory = 500;}
@@ -70,9 +56,12 @@ function zombieZonesAIHandler.onUpdate(zombie)
     local shouldBeActive = (hour >= dayNightActivity.start and hour <= dayNightActivity.stop)
     zombie:makeInactive(not shouldBeActive)
 
-    zombie:addLineChatElement(tostring(zombie:getID()).." _ "..tostring(zombie:getOnlineID())..
-            "\nspeed:"..tostring(zombieModData.ZombieZonesSpeed)..
-            "\ncanCrawlUnderVehicle:"..tostring(canCrawlUnderVehicle))
+    if getDebug() then
+        zombie:addLineChatElement(tostring(zombie:getID()).." _ "..tostring(zombie:getOnlineID())..
+                "\nattachedItems: "..zombie:getAttachedItems():size()..
+                "\nspeed:"..tostring(zombieModData.ZombieZonesSpeed)..
+                "\ncanCrawlUnderVehicle:"..tostring(canCrawlUnderVehicle))
+    end
 end
 
 return zombieZonesAIHandler
