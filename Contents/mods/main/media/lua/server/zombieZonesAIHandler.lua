@@ -69,11 +69,10 @@ function zombieZonesAIHandler.onUpdate(zombie)
     zombie:makeInactive(not shouldBeActive)
 
     if getDebug() then
-
-        zombie:addLineChatElement(tostring(zombie:getID()).." _ "..tostring(zombie:getOnlineID())..
-                "\npersistentOutfitID:"..zombie:getPersistentOutfitID()..
-                "\nspeed:"..tostring(zombieModData.ZombieZonesSpeed)..
-                "\ncanCrawlUnderVehicle:"..tostring(canCrawlUnderVehicle))
+        zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed)..
+                "\ncCUV:"..tostring(canCrawlUnderVehicle)..
+                "\npOID:"..zombie:getPersistentOutfitID()
+        )
     end
 end
 
