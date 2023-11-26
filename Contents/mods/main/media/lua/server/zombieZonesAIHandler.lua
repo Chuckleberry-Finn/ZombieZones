@@ -46,7 +46,7 @@ end
 
 
 function zombieZonesAIHandler.rollForSpeed(zone, zombie)
-    local weight, speeds = { sprinter=zone.speed.sprinter, fastShambler=zone.speed.fastShambler, shambler=zone.speed.shambler}, 0
+    local weight, speeds = 0, { sprinter=zone.speed.sprinter, fastShambler=zone.speed.fastShambler, shambler=zone.speed.shambler}
     for _,chance in pairs(speeds) do weight = weight + (chance) end
 
     local zombieModData = zombie:getModData()
@@ -83,8 +83,8 @@ function zombieZonesAIHandler.onUpdate(zombie)
     local shouldBeActive = dayNightActivity and (hour >= dayNightActivity.start and hour <= dayNightActivity.stop) or nil
     shouldBeActive = shouldBeActive==nil and SandboxVars.ZombieLore.ActiveOnly or shouldBeActive
     zombie:makeInactive(not shouldBeActive)
-    
-    --if getDebug() then zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()%100000).. "\nrand: "..tostring(zombieModData.ZombieZoneRand)) end
+
+    if getDebug() then zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()%100000).. "\nrand: "..tostring(zombieModData.ZombieZoneRand)) end
 end
 
 return zombieZonesAIHandler
