@@ -1,10 +1,7 @@
 local zombieZonesAIHandler = {}
 
 --strength, toughness, transmission, cognition, sight, hearing
---        if (this.memory == -1 && var1 == 1 || var2 == 0) {this.memory = 1250;}
---        if (this.memory == -1 && var1 == 2 || var2 == 1) {this.memory = 800;}
---        if (this.memory == -1 && var1 == 3 || var2 == 2) {this.memory = 500;}
---        if (this.memory == -1 && var1 == 4 || var2 == 3) {this.memory = 25;}
+-- memory = 1 = 1250, 2 = 800, 3 = 500, 4 = 25
 
 require "zoneEditor"
 function zombieZonesAIHandler.getZone(zombie)
