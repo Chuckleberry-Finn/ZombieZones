@@ -1,6 +1,6 @@
 id=ZombieZones
 name=ZombieZones
-description= 
+description=Modifiable zones for zombie behavior.
 poster=poster.png
 tags=Build 41
 versionMin=41.0

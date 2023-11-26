@@ -1,6 +1,6 @@
 version=1
 title=ZombieZones
-description=[h2][/h2]
+description=[h2]Modifiable zones for zombie behavior.[/h2]
 description=
 description=
 description=[url=https://ko-fi.com/chuckleberryfinn][img]https://raw.githubusercontent.com/ChuckTheSheep/chuckImages/main/kofi.png[/img][/url]
