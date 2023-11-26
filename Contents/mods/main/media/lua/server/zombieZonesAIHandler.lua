@@ -84,9 +84,7 @@ function zombieZonesAIHandler.onUpdate(zombie)
     shouldBeActive = shouldBeActive==nil and SandboxVars.ZombieLore.ActiveOnly or shouldBeActive
     zombie:makeInactive(not shouldBeActive)
 
-    if getDebug() then
-        zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed)..
-                "\npOID:"..(zombie:getPersistentOutfitID()%100000).." r: "..tostring(zombieModData.ZombieZoneRand)) end
+    --if getDebug() then zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()%100000).." r: "..tostring(zombieModData.ZombieZoneRand)) end
 end
 
 return zombieZonesAIHandler
