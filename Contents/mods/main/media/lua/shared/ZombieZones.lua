@@ -16,9 +16,7 @@ zombieZones.Zone = {
 }
 
 zombieZones.tooltips = {
-    speed="Weighted probability, these are ratios not percentages.\n
-    If you have sprinters:fastShambler:shambler as 1:0:0, that is 100% sprinters.\n
-    1:3:0 would be 25% to 75%, 1:2:0 would be 33%:66%.",
+    speed='Weighted probability, these are ratios not percentages.\nIf you have sprinters:fastShambler:shambler as 1:0:0, that is 100% sprinters.\n1:3:0 would be 25% to 75%, 1:2:0 would be 33%:66%.',
 }
 --All keys have to equal true (or another non-false/nil value - if you want to utilize the value for something outside of the ZoneEditor)
 --zombieZones.ignore = {["ignoreExample"]=true}
