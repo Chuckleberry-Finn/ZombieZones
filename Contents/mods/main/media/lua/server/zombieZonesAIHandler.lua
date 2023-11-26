@@ -25,25 +25,38 @@ function zombieZonesAIHandler.getZone(zombie)
 end
 
 
-zombieZonesAIHandler.walkTypes = {
-    sprinter={id="sprint",rand=5},
-    fastShambler={id="",rand=5},
-    shambler={id="slow",rand=3},
-}
+zombieZonesAIHandler.walkTypes = { sprinter={id="sprint",rand=5}, fastShambler={id="",rand=5}, shambler={id="slow",rand=3}, }
+function zombieZonesAIHandler.seededRand(seed,upper)
+    ---https://stackoverflow.com/questions/20154991/generating-uniform-random-numbers-in-lua
+    local A1, A2 = 727595, 798405  -- 5^17=D20*A1+A2
+    local D20, D40 = 1048576, 1099511627776  -- 2^20, 2^40
+    local X1, X2 = 0, 1
 
-function zombieZonesAIHandler.rollForSpeed(zone)
-    local speeds = { sprinter=zone.speed.sprinter, fastShambler=zone.speed.fastShambler, shambler=zone.speed.shambler}
+    local result = nil
+    for i=0, math.abs(seed) do
+        local U = X2*A2
+        local V = (X1*A2 + X2*A1) % D20
+        V = (V*D20 + U) % D40
+        X1 = math.floor(V/D20)
+        X2 = V - X1*D20
+        result = math.floor((V/D40)*upper) + 1
+    end
+    return result
+end
 
-    local weight = 0
+
+function zombieZonesAIHandler.rollForSpeed(zone, zombie)
+    local weight, speeds = { sprinter=zone.speed.sprinter, fastShambler=zone.speed.fastShambler, shambler=zone.speed.shambler}, 0
     for _,chance in pairs(speeds) do weight = weight + (chance) end
-    local rand = ZombRand(1, weight+1)
+
+    local zombieModData = zombie:getModData()
+    zombieModData.ZombieZoneRand = zombieModData.ZombieZoneRand or zombieZonesAIHandler.seededRand((zombie:getPersistentOutfitID()%100000),weight)
+    if zombieModData.ZombieZonesSpeed then return end
 
     weight = 0
     for speed,chance in pairs(speeds) do
         weight = weight + (chance)
-        if weight >= rand then
-            return zombieZonesAIHandler.walkTypes[speed].id..ZombRand(1,zombieZonesAIHandler.walkTypes[speed].rand)+1
-        end
+        if weight >= zombieModData.ZombieZoneRand then return (zombieZonesAIHandler.walkTypes[speed].id..(ZombRand(1,zombieZonesAIHandler.walkTypes[speed].rand)+1)) end
     end
 end
 
@@ -54,26 +67,24 @@ function zombieZonesAIHandler.onUpdate(zombie)
     if zombie:isReanimatedPlayer() then return end
     local zombieModData = zombie:getModData()
     local zone = zombieZonesAIHandler.getZone(zombie)
-    if not zone then return end
 
     local zombieSpeed = zombieModData.ZombieZonesSpeed
-    if zombieSpeed == nil then zombieModData.ZombieZonesSpeed = zombieZonesAIHandler.rollForSpeed(zone) end
+
+    if zombieSpeed == nil and zone then
+        zombieModData.ZombieZonesSpeed = zombieZonesAIHandler.rollForSpeed(zone, zombie)
+    end
     if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
 
-    local canCrawlUnderVehicle = zone.canCrawlUnderVehicle and (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) or SandboxVars.ZombieLore.CrawlUnderVehicle
+    local canCrawlUnderVehicle = zone and zone.canCrawlUnderVehicle and (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) or SandboxVars.ZombieLore.CrawlUnderVehicle
     zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
 
-    local dayNightActivity = zone.dayNightActivity
+    local dayNightActivity = zone and zone.dayNightActivity
     local hour = getGameTime():getHour()
-    local shouldBeActive = (hour >= dayNightActivity.start and hour <= dayNightActivity.stop)
+    local shouldBeActive = dayNightActivity and (hour >= dayNightActivity.start and hour <= dayNightActivity.stop) or nil
+    shouldBeActive = shouldBeActive==nil and SandboxVars.ZombieLore.ActiveOnly or shouldBeActive
     zombie:makeInactive(not shouldBeActive)
-
-    if getDebug() then
-        zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed)..
-                "\ncCUV:"..tostring(canCrawlUnderVehicle)..
-                "\npOID:"..zombie:getPersistentOutfitID()
-        )
-    end
+    
+    --if getDebug() then zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()%100000).. "\nrand: "..tostring(zombieModData.ZombieZoneRand)) end
 end
 
 return zombieZonesAIHandler
