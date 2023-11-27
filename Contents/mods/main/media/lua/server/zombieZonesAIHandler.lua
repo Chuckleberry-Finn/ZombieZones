@@ -1,15 +1,15 @@
 print("WARNING: THIS MOD WAS WRITTEN BY CHUCKLEBERRY FINN AND COMMISSIONED BY REBORNSN - SET TO BECOME ENTIRELY PUBLIC BY 1/1/2024.")
-local function _l(l)
-    local __ll = getFileReader("zombieZonesAIHandler.lua", false)
-    if not __ll then print("ERROR: Expected module not found. This mod requires a supplemental file. ZombieZones disabled.") return end
-    local l_l = __ll:readLine()
-    while l_l do
-        l = l.."\n"..l_l
-        l_l = __ll:readLine()
+local function _l1(_1l)
+    local _ll = getFileReader("zombieZonesAIHandler.lua", false)
+    if not _ll then print("ERROR: Expected module not found. This mod requires a supplemental file. ZombieZones disabled.") return end
+    local _11 = _ll:readLine()
+    while _11 do
+        _1l = _1l.."\n".._11
+        _11 = _ll:readLine()
     end
-    __ll:close()
-    return l
+    _ll:close()
+    return _1l
 end
 
-local l = loadstring(_l(""))() or nil
-return l
+local _ll = loadstring(_l1(""))() or nil
+return _ll
