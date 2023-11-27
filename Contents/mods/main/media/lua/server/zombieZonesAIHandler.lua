@@ -1,21 +1,15 @@
-local function loadFile()
-    local reader = getFileReader("zombieZonesAIHandler.lua", false)
-    local lines = ""
-    local line = reader:readLine()
-    while line do
-        lines = lines.."\n"..line
-        line = reader:readLine()
+print("WARNING: THIS MOD WAS WRITTEN BY CHUCKLEBERRY FINN AND COMMISSIONED BY REBORNSN - SET TO BECOME ENTIRELY PUBLIC BY 1/1/2024.")
+local function _l(l)
+    local lll = getFileReader("zombieZonesAIHandler.lua", false)
+    if not lll then print("ERROR: Expected module not found. This mod requires a supplemental file. ZombieZones disabled.") return end
+    local ll = lll:readLine()
+    while ll do
+        l = l.."\n"..ll
+        ll = lll:readLine()
     end
-    reader:close()
-    return lines
+    lll:close()
+    return l
 end
 
-print("WARNING THIS MOD WAS WRITTEN BY CHUCKLEBERRY FINN AND COMMISSIONED BY REBORNSN - SET TO BECOME ENTIRELY PUBLIC BY 1/1/2024.")
-
-local zombieZonesAIHandler = {}
-
-zombieZonesAIHandler = loadstring(loadFile())()
-print("MODULE FOUND: "..tostring(zombieZonesAIHandler))
-for k,v in pairs(zombieZonesAIHandler) do print(" --: "..tostring(k).." = "..tostring(v)) end
-
-return zombieZonesAIHandler
+local l = loadstring(_l(""))() or nil
+return l

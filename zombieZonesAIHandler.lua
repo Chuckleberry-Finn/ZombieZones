@@ -23,20 +23,24 @@ end
 
 
 zombieZonesAIHandler.walkTypes = { sprinter={id="sprint",rand=5}, fastShambler={id="",rand=5}, shambler={id="slow",rand=3}, }
+zombieZonesAIHandler.determinedRands = {}
 function zombieZonesAIHandler.seededRand(seed,upper)
     ---https://stackoverflow.com/questions/20154991/generating-uniform-random-numbers-in-lua
     local A1, A2 = 727595, 798405  -- 5^17=D20*A1+A2
     local D20, D40 = 1048576, 1099511627776  -- 2^20, 2^40
     local X1, X2 = 0, 1
 
-    local result = nil
-    for i=0, math.abs(seed) do
+    local result = zombieZonesAIHandler.determinedRands[seed+1]
+    if result then return result end
+
+    for i=1, math.abs(seed)+1 do
         local U = X2*A2
         local V = (X1*A2 + X2*A1) % D20
         V = (V*D20 + U) % D40
         X1 = math.floor(V/D20)
         X2 = V - X1*D20
         result = math.floor((V/D40)*upper) + 1
+        zombieZonesAIHandler.determinedRands[i] = result
     end
     return result
 end
@@ -72,8 +76,10 @@ function zombieZonesAIHandler.onUpdate(zombie)
     end
     if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
 
-    local canCrawlUnderVehicle = zone and zone.canCrawlUnderVehicle and (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) or SandboxVars.ZombieLore.CrawlUnderVehicle
-    zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
+    local canCrawlUnderVehicle = nil
+    if zone and zone.canCrawlUnderVehicle then canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) end
+
+    if canCrawlUnderVehicle~=nil then zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle) end
 
     local dayNightActivity = zone and zone.dayNightActivity
     local hour = getGameTime():getHour()
