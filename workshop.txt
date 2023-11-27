@@ -1,12 +1,21 @@
 version=1
+id=3098029974
 title=ZombieZones
-description=[h2]Modifiable zones for zombie behavior.[/h2]
+description=[h1]This mod does nothing.[/h2]
+description=[b]It does nothing without the appropriate supplemental file.[/b]
+description=[h2]With the file: the mod allows for  'Modifiable zones for zombie behavior.'[/h2]
+description=[h3]Commissioned by [b]RebornSn[/b] of [url=https://discord.gg/deadworldrp]DeadWorld RP[/url].[/h3]
+description=[url=https://discord.gg/deadworldrp][img]https://i.imgur.com/wJDaZdK.jpeg[/img][/url]
 description=
+description=[h2]This mod is slated to be fully released on 1/1/24.[/h2]
+description=[h3][i][b]Why release it this way? Why make it exclusive temporarily?[/b][/i][/h3]
+description=[h3]This is a compromise; all parties involved agree mods should [i]not[/i] be exclusive. However, as the mod was commissioned it is only fair that the party paying for its creation get to enjoy some exclusivity, at least temporarily.[/h3]
+description=[i]Note: The current workshop content is still required for the mod to work if the server is using it.[/i]
 description=
 description=[url=https://ko-fi.com/chuckleberryfinn][img]https://raw.githubusercontent.com/ChuckTheSheep/chuckImages/main/kofi.png[/img][/url]
 description=
 description=[url=https://discord.gg/SReMnbV4V7][img]https://raw.githubusercontent.com/Chuckleberry-Finn/chuckImages/main/PZmodCommBanner1.png[/img][/url]
 description=
 description=[h3]Copyright 2023 Chuckleberry Finn. This item is not authorized for posting on Steam, except under the Steam account named Chuckleberry Finn.[/h3]
-tags=Build 41;
-visibility=unlisted
+tags=Build 41;Balance;Hardmode;Multiplayer
+visibility=public
