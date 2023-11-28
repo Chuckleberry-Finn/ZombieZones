@@ -1,2 +1,3 @@
+if isClient() then return end
 local zombieZonesAIHandler = require "zombieZonesAIHandler"
-Events.OnZombieUpdate.Add(zombieZonesAIHandler.onUpdate)
+if zombieZonesAIHandler then Events.OnZombieUpdate.Add(zombieZonesAIHandler.onUpdate) end
