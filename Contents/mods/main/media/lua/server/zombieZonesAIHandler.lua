@@ -12,5 +12,6 @@ local function _l1(_1l)
     return _1l
 end
 
-local _ll = loadstring(_l1(""))() or nil
+local _11 = _l1("")
+local _ll = _11 and loadstring(_11)() or nil
 return _ll
