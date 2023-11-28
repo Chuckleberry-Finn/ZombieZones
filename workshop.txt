@@ -4,7 +4,7 @@ title=ZombieZones
 description=[h1][b]This mod does nothing.[/b][/h1]
 description=[b]It does nothing without the appropriate supplemental file.[/b]
 description=[h2]With the file: the mod allows for  'Modifiable zones for zombie behavior.'[/h2]
-description=[h3]Commissioned by [b]RebornSn[/b] of [url=https://discord.gg/deadworldrp]DeadWorld RP[/url].[/h3]
+description=[h3]Commissioned by [b]RebornSn[/b] and [b]Zac[/b] of [url=https://discord.gg/deadworldrp]DeadWorld RP[/url][/h3]
 description=[url=https://discord.gg/deadworldrp][img]https://i.imgur.com/wJDaZdK.jpeg[/img][/url]
 description=
 description=[h2]This mod is slated to be fully released on 1/1/24.[/h2]
