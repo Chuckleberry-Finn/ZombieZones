@@ -3,11 +3,11 @@ local zombieZonesAIHandler = {}
 --strength, toughness, transmission, cognition, sight, hearing
 -- memory = 1 = 1250, 2 = 800, 3 = 500, 4 = 25
 
-require "zoneEditor"
 function zombieZonesAIHandler.getZone(zombie)
+    local zombieZones = ModData.getOrCreate("ZombieZones_zones")
+    if not zombieZones then return end
 
-    local zombieZones = zoneEditor.requestZone("ZombieZones")
-    if not zombieZones then return false end
+    for i, zone in pairs(zombieZones) do print(i, ", ", zone, ", ", #zone.coordinates) end
 
     for i, zone in pairs(zombieZones) do
         if zone.coordinates and
@@ -18,7 +18,6 @@ function zombieZonesAIHandler.getZone(zombie)
     end
 
     return false
-
 end
 
 
@@ -64,6 +63,7 @@ end
 
 ---@param zombie IsoZombie|IsoGameCharacter|IsoMovingObject|IsoObject
 function zombieZonesAIHandler.onUpdate(zombie)
+
     ---zombie mod data is not saved unless it's a reanimated player
     if zombie:isReanimatedPlayer() then return end
     local zombieModData = zombie:getModData()
