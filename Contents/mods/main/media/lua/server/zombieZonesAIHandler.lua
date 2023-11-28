@@ -1,3 +1,4 @@
+if isClient() then return end
 print("WARNING: THIS MOD WAS WRITTEN BY CHUCKLEBERRY FINN AND COMMISSIONED BY REBORNSN - SET TO BECOME ENTIRELY PUBLIC BY 1/1/2024.")
 local function _l1(_1l)
     local _ll = getFileReader("zombieZonesAIHandler.lua", false)
