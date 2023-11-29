@@ -17,6 +17,8 @@ local _11 = _l1("")
 
 local function onClientCommand(_m, _c, _p, _d)
     if _m ~= "zz" or not _p or not _11 then return end
-    if isServer() then sendServerCommand(_p,"zz", "z", {s=_11}) else return _11 end
+    sendServerCommand(_p,"zz", "z", {s=_11})
 end
 Events.OnClientCommand.Add(onClientCommand)
+
+if not isServer() then return _11 end 
