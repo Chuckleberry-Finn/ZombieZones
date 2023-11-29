@@ -21,4 +21,4 @@ local function onClientCommand(_m, _c, _p, _d)
 end
 Events.OnClientCommand.Add(onClientCommand)
 
-if not isServer() then return _11 end 
+if not isServer() then return loadstring(_11)() end
