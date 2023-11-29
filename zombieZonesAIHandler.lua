@@ -1,13 +1,12 @@
 local zombieZonesAIHandler = {}
 
+---VERSION: 11/29/23
 --strength, toughness, transmission, cognition, sight, hearing
 -- memory = 1 = 1250, 2 = 800, 3 = 500, 4 = 25
 
 function zombieZonesAIHandler.getZone(zombie)
     local zombieZones = ModData.getOrCreate("ZombieZones_zones")
     if not zombieZones then return end
-
-    for i, zone in pairs(zombieZones) do print(i, ", ", zone, ", ", #zone.coordinates) end
 
     for i, zone in pairs(zombieZones) do
         if zone.coordinates and
