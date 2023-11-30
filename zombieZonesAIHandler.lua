@@ -62,6 +62,13 @@ function zombieZonesAIHandler.onUpdate(zombie)
     local zombieModData = zombie:getModData()
     local zone = zombieZonesAIHandler.getZone(zombie)
 
+    local oldPersistentID = zombieModData.ZombieZonesPersistentID
+    if oldPersistentID and oldPersistentID~=zombie:getPersistentOutfitID() then
+        zombieModData.ZombieZonesSpeed = nil
+        zombieModData.ZombieZoneRand = nil
+    end
+    zombieModData.ZombieZonesPersistentID = zombie:getPersistentOutfitID()
+    
     local zombieSpeed = zombieModData.ZombieZonesSpeed
 
     if zombieSpeed == nil and zone then
