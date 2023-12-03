@@ -4,9 +4,11 @@ local zombieZonesAIHandler = {}
 --strength, toughness, transmission, cognition, sight, hearing
 -- memory = 1 = 1250, 2 = 800, 3 = 500, 4 = 25
 
+require "zoneEditor"
 function zombieZonesAIHandler.getZone(zombie)
-    local zombieZones = ModData.getOrCreate("ZombieZones_zones")
-    if not zombieZones then return end
+
+    local zombieZones = zoneEditor.requestZone("ZombieZones")
+    if not zombieZones then return false end
 
     for i, zone in pairs(zombieZones) do
 
