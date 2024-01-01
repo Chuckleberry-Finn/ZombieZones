@@ -1,15 +1,9 @@
 version=1
 id=3098029974
 title=ZombieZones
-description=[h1][b]This mod does nothing.[/b][/h1]
-description=[b]It does nothing without the appropriate supplemental file.[/b]
-description=[h2]With the file: the mod allows for  'Modifiable zones for zombie behavior.'[/h2]
+description=[h2]Modifiable zones for zombie behavior.[/h2]
+description=[b]Utilizes ZoneEditor to set up zones in real-time, as admin or in debug mode.[/b]
 description=[h3]Commissioned by [b]Zac[/b] and [b]RebornSn[/b] of [url=https://discord.gg/deadworldrp]DeadWorld RP[/url][/h3]
-description=
-description=[h2]This mod is slated to be fully released on 1/1/24.[/h2]
-description=[h3][i][b]Why release it this way? Why make it exclusive temporarily?[/b][/i][/h3]
-description=[h3]This is a compromise; all parties involved agree mods should [i]not[/i] be exclusive. However, as the mod was commissioned it is only fair that the party paying for its creation get to enjoy some exclusivity, at least temporarily.[/h3]
-description=[i]Note: The current workshop content is still required for the mod to work if the server is using it.[/i]
 description=
 description=[url=https://ko-fi.com/chuckleberryfinn][img]https://raw.githubusercontent.com/ChuckTheSheep/chuckImages/main/kofi.png[/img][/url]
 description=
