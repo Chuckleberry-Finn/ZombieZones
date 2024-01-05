@@ -3,6 +3,7 @@ local zombieZones = {}
 
 ---template zone:
 zombieZones.Zone = {
+    name = "newZone",
     --Required values: coordinates, which is a table of x1, y1, x2, y2
     coordinates={x1=-1, y1=-1, x2=-1, y2=-1},
 
