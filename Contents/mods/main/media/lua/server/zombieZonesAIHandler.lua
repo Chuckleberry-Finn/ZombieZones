@@ -87,7 +87,12 @@ function zombieZonesAIHandler.onUpdate(zombie)
 
     local dayNightActivity = zone and zone.dayNightActivity
     local hour = getGameTime():getHour()
-    local shouldBeActive = dayNightActivity and (hour >= dayNightActivity.start and hour <= dayNightActivity.stop) or nil
+    local shouldBeActive
+    if dayNightActivity then
+        local low = dayNightActivity.start < dayNightActivity.stop and dayNightActivity.start or dayNightActivity.stop
+        local high = dayNightActivity.start < dayNightActivity.stop and dayNightActivity.stop or dayNightActivity.start
+        if (hour >= low and hour <= high) then shouldBeActive = true end
+    end
     shouldBeActive = shouldBeActive==nil and SandboxVars.ZombieLore.ActiveOnly or shouldBeActive
     zombie:makeInactive(not shouldBeActive)
 
