@@ -1,3 +1,7 @@
 [ 1/6/24 ]
 - Update: Fixed day/night activity overnight calculations.
 [ ------ ]
+
+[ 1/6/24 - hotfix1 ]
+- Hotfix: daytime/night time checks.
+[ ------ ]
