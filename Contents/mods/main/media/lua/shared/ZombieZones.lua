@@ -9,7 +9,7 @@ zombieZones.Zone = {
 
     speed={sprinter=0, fastShambler=0, shambler=0},
     canCrawlUnderVehicle="true",
-    dayNightActivity={start=1,stop=24},
+    dayNightActivity={start=0,stop=24},
 
     --Other values can be added here if you wish to utilize this file as a module outside of zoneEditor.
     --Adding the value's key into .ignore will ignore it from display - this is useful for background data/values.
