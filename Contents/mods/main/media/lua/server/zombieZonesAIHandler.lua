@@ -75,30 +75,34 @@ function zombieZonesAIHandler.onUpdate(zombie)
     end
     zombieModData.ZombieZonesPersistentID = zombie:getPersistentOutfitID()
     
-    local zombieSpeed = zombieModData.ZombieZonesSpeed
-
-    if zombieSpeed == nil and zone then
-        zombieModData.ZombieZonesSpeed = zombieZonesAIHandler.rollForSpeed(zone, zombie)
-    end
-    if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
-
-    local canCrawlUnderVehicle = nil
-    if zone and zone.canCrawlUnderVehicle then canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) end
-
-    if canCrawlUnderVehicle~=nil then zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle) end
 
     local dayNightActivity = zone and zone.dayNightActivity
     local hour = getGameTime():getHour()
     local shouldBeActive
     if dayNightActivity then
-        local low = dayNightActivity.start < dayNightActivity.stop and dayNightActivity.start or dayNightActivity.stop
-        local high = dayNightActivity.start < dayNightActivity.stop and dayNightActivity.stop or dayNightActivity.start
-        if (hour >= low and hour <= high) then shouldBeActive = true end
+        if (dayNightActivity.start >= dayNightActivity.stop) then
+            shouldBeActive = (hour >= dayNightActivity.start or hour < dayNightActivity.stop)
+        else
+            shouldBeActive = (hour >= dayNightActivity.start and hour < dayNightActivity.stop)
+        end
     end
-    shouldBeActive = shouldBeActive==nil and SandboxVars.ZombieLore.ActiveOnly or shouldBeActive
-    zombie:makeInactive(not shouldBeActive)
 
-    --if getDebug() then zombie:addLineChatElement("speed:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand)) end
+    zombie:makeInactive(not shouldBeActive)
+    if shouldBeActive then
+
+        local zombieSpeed = zombieModData.ZombieZonesSpeed
+        if zombieSpeed == nil and zone then
+            zombieModData.ZombieZonesSpeed = zombieZonesAIHandler.rollForSpeed(zone, zombie)
+        end
+        if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
+
+        local canCrawlUnderVehicle = nil
+        if zone and zone.canCrawlUnderVehicle then canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) end
+
+        if canCrawlUnderVehicle~=nil then zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle) end
+    end
+
+    ---if getDebug() then zombie:addLineChatElement("i:"..tostring(shouldBeActive).."  s:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand)) end
 end
 
 return zombieZonesAIHandler
