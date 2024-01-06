@@ -10,14 +10,16 @@ function zombieZonesAIHandler.getZone(zombie)
     if not zombieZones then return false end
 
     for i, zone in pairs(zombieZones) do
+        if zone.coordinates and zone.coordinates.x1 and zone.coordinates.x2 and zone.coordinates.y1 and zone.coordinates.y2 then
 
-        local lowX = math.min(zone.coordinates.x1, zone.coordinates.x2)
-        local highX = math.max(zone.coordinates.x1, zone.coordinates.x2)
+            local lowX = math.min(zone.coordinates.x1, zone.coordinates.x2)
+            local highX = math.max(zone.coordinates.x1, zone.coordinates.x2)
 
-        local lowY = math.min(zone.coordinates.y1, zone.coordinates.y2)
-        local highY = math.max(zone.coordinates.y1, zone.coordinates.y2)
+            local lowY = math.min(zone.coordinates.y1, zone.coordinates.y2)
+            local highY = math.max(zone.coordinates.y1, zone.coordinates.y2)
 
-        if zone.coordinates and zombie:getX() >= lowX and zombie:getX() <= highX and zombie:getY() >= lowY and zombie:getY() <= highY then return zone end
+            if zone.coordinates and zombie:getX() >= lowX and zombie:getX() <= highX and zombie:getY() >= lowY and zombie:getY() <= highY then return zone end
+        end
     end
 
     return false
