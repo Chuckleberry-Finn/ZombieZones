@@ -74,11 +74,10 @@ function zombieZonesAIHandler.onUpdate(zombie)
         zombieModData.ZombieZoneRand = nil
     end
     zombieModData.ZombieZonesPersistentID = zombie:getPersistentOutfitID()
-    
 
     local dayNightActivity = zone and zone.dayNightActivity
     local hour = getGameTime():getHour()
-    local shouldBeActive
+    local shouldBeActive = true
     if dayNightActivity then
         if (dayNightActivity.start >= dayNightActivity.stop) then
             shouldBeActive = (hour >= dayNightActivity.start or hour < dayNightActivity.stop)
@@ -91,8 +90,12 @@ function zombieZonesAIHandler.onUpdate(zombie)
     if shouldBeActive then
 
         local zombieSpeed = zombieModData.ZombieZonesSpeed
-        if zombieSpeed == nil and zone then
-            zombieModData.ZombieZonesSpeed = zombieZonesAIHandler.rollForSpeed(zone, zombie)
+        if zombieSpeed == nil then
+            if zone then
+                zombieModData.ZombieZonesSpeed = zombieZonesAIHandler.rollForSpeed(zone, zombie)
+            else
+                zombieModData.ZombieZonesSpeed = false
+            end
         end
         if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
 
@@ -102,7 +105,7 @@ function zombieZonesAIHandler.onUpdate(zombie)
         if canCrawlUnderVehicle~=nil then zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle) end
     end
 
-    ---if getDebug() then zombie:addLineChatElement("i:"..tostring(shouldBeActive).."  s:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand)) end
+    if getDebug() then zombie:addLineChatElement("i:"..tostring(shouldBeActive).."  s:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand)) end
 end
 
 return zombieZonesAIHandler
