@@ -9,3 +9,7 @@
 [ 1/10/24 ]
 - Fix: Removing leftover stuff from exclusivity.
 [ ------ ]
+
+[ 1/11/24 ]
+- Fix: Zombies leaving/entering zones will not change behaviors.
+[ ------ ]
