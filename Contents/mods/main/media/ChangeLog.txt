@@ -13,3 +13,7 @@
 [ 1/11/24 ]
 - Fix: Zombies leaving/entering zones will not change behaviors.
 [ ------ ]
+
+[ 1/19/24 ]
+- Fix text scaling issue in UI.
+[ ------ ]
