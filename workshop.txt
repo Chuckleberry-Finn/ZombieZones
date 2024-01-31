@@ -3,6 +3,7 @@ id=3098029974
 title=ZombieZones
 description=[h2]Modifiable zones for zombie behavior.[/h2]
 description=[b]Utilizes ZoneEditor to set up zones in real-time, as admin or in debug mode.[/b]
+description=[i]Make Zombies sprint, shamble, or in between all with a controllable percentage.[/i]
 description=[h3]Commissioned by [b]Zac[/b] and [b]RebornSn[/b] of [url=https://discord.gg/deadworldrp]DeadWorld RP[/url][/h3]
 description=
 description=[url=https://ko-fi.com/chuckleberryfinn][img]https://raw.githubusercontent.com/ChuckTheSheep/chuckImages/main/kofi.png[/img][/url][url=https://discord.gg/SReMnbV4V7][img]https://raw.githubusercontent.com/Chuckleberry-Finn/chuckImages/main/PZmodCommBanner3.png[/img][/url]
