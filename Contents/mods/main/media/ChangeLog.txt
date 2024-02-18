@@ -17,3 +17,8 @@
 [ 1/19/24 ]
 - Fix text scaling issue in UI.
 [ ------ ]
+
+[ 2/18/24 ]
+- Removed internal debug test.
+- Removed old file.
+[ ------ ]
