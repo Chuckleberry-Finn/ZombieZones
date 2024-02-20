@@ -22,3 +22,7 @@
 - Removed internal debug test.
 - Removed old file.
 [ ------ ]
+
+[ 2/19/24 ]
+- Fix: Zombies hats falling off won't cause re-rolling zombie stats.
+[ ------]
