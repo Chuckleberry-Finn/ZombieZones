@@ -49,7 +49,7 @@ function zombieZonesAIHandler.rollForSpeed(zone, zombie)
     for _,chance in pairs(speeds) do weight = weight + (chance) end
 
     local zombieModData = zombie:getModData()
-    zombieModData.ZombieZoneRand = zombieModData.ZombieZoneRand or zombieZonesAIHandler.seededRand((zombie:getPersistentOutfitID()),weight)
+    zombieModData.ZombieZoneRand = zombieModData.ZombieZoneRand or zombieZonesAIHandler.seededRand(zombieZonesAIHandler.getTruePersistentOutfitID(zombie),weight)
     if zombieModData.ZombieZonesSpeed then return end
 
     weight = 0
@@ -57,6 +57,42 @@ function zombieZonesAIHandler.rollForSpeed(zone, zombie)
         weight = weight + (chance)
         if weight >= zombieModData.ZombieZoneRand then return (zombieZonesAIHandler.walkTypes[speed].id..(ZombRand(1,zombieZonesAIHandler.walkTypes[speed].rand)+1)) end
     end
+end
+
+
+--https://stackoverflow.com/questions/5977654/how-do-i-use-the-bitwise-operator-xor-in-lua
+zombieZonesAIHandler.bit = {}
+
+function zombieZonesAIHandler.bit.And(a,b)
+    local p,c=1,0
+    while a>0 and b>0 do
+        local ra,rb=a%2,b%2
+        if ra+rb>1 then c=c+p end
+        a,b,p=(a-ra)/2,(b-rb)/2,p*2
+    end
+    return c
+end
+
+function zombieZonesAIHandler.bit.Not(n)
+    local p,c=1,0
+    while n>0 do
+        local r=n%2
+        if r<1 then c=c+p end
+        n,p=(n-r)/2,p*2
+    end
+    return c
+end
+
+
+---@param zombie IsoZombie|IsoGameCharacter|IsoMovingObject|IsoObject
+function zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
+    local bit = zombieZonesAIHandler.bit
+    local pID = zombie:getPersistentOutfitID()
+
+    zombieZonesAIHandler.bit.hat = zombieZonesAIHandler.bit.hat or bit.Not(32768)
+    local bitHat = zombieZonesAIHandler.bit.hat
+
+    return bit.And(pID,bitHat)
 end
 
 
@@ -69,11 +105,11 @@ function zombieZonesAIHandler.onUpdate(zombie)
     local zone = zombieZonesAIHandler.getZone(zombie)
 
     local oldPersistentID = zombieModData.ZombieZonesPersistentID
-    if oldPersistentID and oldPersistentID~=zombie:getPersistentOutfitID() then
+    if oldPersistentID and oldPersistentID~=zombieZonesAIHandler.getTruePersistentOutfitID(zombie) then
         zombieModData.ZombieZonesSpeed = nil
         zombieModData.ZombieZoneRand = nil
     end
-    zombieModData.ZombieZonesPersistentID = zombie:getPersistentOutfitID()
+    zombieModData.ZombieZonesPersistentID = zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
 
     local dayNightActivity = zone and zone.dayNightActivity
     local hour = getGameTime():getHour()
