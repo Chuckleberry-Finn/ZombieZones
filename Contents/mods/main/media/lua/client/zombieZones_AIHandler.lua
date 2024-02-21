@@ -63,6 +63,16 @@ end
 --https://stackoverflow.com/questions/5977654/how-do-i-use-the-bitwise-operator-xor-in-lua
 zombieZonesAIHandler.bit = {}
 
+function zombieZonesAIHandler.bit.Or(a,b)
+    local p,c=1,0
+    while a+b>0 do
+        local ra,rb=a%2,b%2
+        if ra+rb>0 then c=c+p end
+        a,b,p=(a-ra)/2,(b-rb)/2,p*2
+    end
+    return c
+end
+
 function zombieZonesAIHandler.bit.And(a,b)
     local p,c=1,0
     while a>0 and b>0 do
@@ -84,15 +94,28 @@ function zombieZonesAIHandler.bit.Not(n)
 end
 
 
+zombieZonesAIHandler.idMatrix = {trueID={}, hatFallen={}}
 ---@param zombie IsoZombie|IsoGameCharacter|IsoMovingObject|IsoObject
 function zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
     local bit = zombieZonesAIHandler.bit
     local pID = zombie:getPersistentOutfitID()
 
+    local found = zombieZonesAIHandler.idMatrix.trueID[pID] or zombieZonesAIHandler.idMatrix.hatFallen[pID]
+    if found then return found end
+
+    print("ZOMBIE: ", zombie, " - ", zombie:getID())
+
+    --store bit.hat
     zombieZonesAIHandler.bit.hat = zombieZonesAIHandler.bit.hat or bit.Not(32768)
     local bitHat = zombieZonesAIHandler.bit.hat
 
-    return bit.And(pID,bitHat)
+    local trueID = bit.And(pID,bitHat)
+    local hatID = (trueID~=pID and pID) or bit.Or(pID,32768)
+
+    zombieZonesAIHandler.idMatrix.trueID[trueID] = trueID
+    zombieZonesAIHandler.idMatrix.hatFallen[hatID] = trueID
+
+    return trueID
 end
 
 
