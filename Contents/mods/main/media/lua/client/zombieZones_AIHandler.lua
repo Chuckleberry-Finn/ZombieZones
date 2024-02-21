@@ -102,9 +102,7 @@ function zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
 
     local found = zombieZonesAIHandler.idMatrix.trueID[pID] or zombieZonesAIHandler.idMatrix.hatFallen[pID]
     if found then return found end
-
-    print("ZOMBIE: ", zombie, " - ", zombie:getID())
-
+    
     --store bit.hat
     zombieZonesAIHandler.bit.hat = zombieZonesAIHandler.bit.hat or bit.Not(32768)
     local bitHat = zombieZonesAIHandler.bit.hat
