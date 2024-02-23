@@ -187,7 +187,7 @@ function zombieZonesAIHandler.onUpdate(zombie)
 
         local bits = Integer.toBinaryString(pID); -- returns a string with 0 and 1's
         local reordered = string.reverse(bits); -- if you wanna handle it that way, then swap the hat bit around however you wish (16th bit from the back?)
-        local modified = nil-- whatever work you gotta do
+        local modified = reordered-- whatever work you gotta do
         local res = Integer.toUnsignedInteger(string.reverse(modified), 2);
         zombie:addLineChatElement(" -: "..reordered.."\n  : "..res.."\n")
 
