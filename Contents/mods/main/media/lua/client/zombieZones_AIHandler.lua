@@ -63,6 +63,22 @@ end
 --https://stackoverflow.com/questions/5977654/how-do-i-use-the-bitwise-operator-xor-in-lua
 zombieZonesAIHandler.bit = {}
 
+function zombieZonesAIHandler.bit.Xor(a,b)--Bitwise xor
+    local p,c=1,0
+    while a>0 and b>0 do
+        local ra,rb=a%2,b%2
+        if ra~=rb then c=c+p end
+        a,b,p=(a-ra)/2,(b-rb)/2,p*2
+    end
+    if a<b then a=b end
+    while a>0 do
+        local ra=a%2
+        if ra>0 then c=c+p end
+        a,p=(a-ra)/2,p*2
+    end
+    return c
+end
+
 function zombieZonesAIHandler.bit.Or(a,b)
     local p,c=1,0
     while a+b>0 do
@@ -102,13 +118,13 @@ function zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
 
     local found = zombieZonesAIHandler.idMatrix.trueID[pID] or zombieZonesAIHandler.idMatrix.hatFallen[pID]
     if found then return found end
-    
-    --store bit.hat
-    zombieZonesAIHandler.bit.hat = zombieZonesAIHandler.bit.hat or bit.Not(32768)
-    local bitHat = zombieZonesAIHandler.bit.hat
 
-    local trueID = bit.And(pID,bitHat)
-    local hatID = (trueID~=pID and pID) or bit.Or(pID,32768)
+    local neuteredID = math.abs(pID)
+
+    local trueID = (bit.And(neuteredID,32768) ~= 0) and bit.And(neuteredID,-32769) or neuteredID
+    local hatID = bit.Or(trueID,32768)
+
+    trueID = ((pID<0) and 0-trueID) or trueID
 
     zombieZonesAIHandler.idMatrix.trueID[trueID] = trueID
     zombieZonesAIHandler.idMatrix.hatFallen[hatID] = trueID
@@ -162,7 +178,21 @@ function zombieZonesAIHandler.onUpdate(zombie)
         if canCrawlUnderVehicle~=nil then zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle) end
     end
 
-    --if getDebug() then zombie:addLineChatElement("i:"..tostring(shouldBeActive).."  s:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand)) end
+    if getDebug() then
+        --zombie:addLineChatElement("i:"..tostring(shouldBeActive).."  s:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand))
+
+        local pID = zombie:getPersistentOutfitID()
+
+        local tID = zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
+
+        local bits = Integer.toBinaryString(pID); -- returns a string with 0 and 1's
+        local reordered = string.reverse(bits); -- if you wanna handle it that way, then swap the hat bit around however you wish (16th bit from the back?)
+        local modified = nil-- whatever work you gotta do
+        local res = Integer.toUnsignedInteger(string.reverse(modified), 2);
+        zombie:addLineChatElement(" -: "..reordered.."\n  : "..res.."\n")
+
+        --zombie:addLineChatElement(" -: "..pID.."\n  : "..tID.."\n")
+    end
 end
 
 return zombieZonesAIHandler
