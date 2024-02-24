@@ -60,74 +60,27 @@ function zombieZonesAIHandler.rollForSpeed(zone, zombie)
 end
 
 
---https://stackoverflow.com/questions/5977654/how-do-i-use-the-bitwise-operator-xor-in-lua
-zombieZonesAIHandler.bit = {}
-
-function zombieZonesAIHandler.bit.Xor(a,b)--Bitwise xor
-    local p,c=1,0
-    while a>0 and b>0 do
-        local ra,rb=a%2,b%2
-        if ra~=rb then c=c+p end
-        a,b,p=(a-ra)/2,(b-rb)/2,p*2
-    end
-    if a<b then a=b end
-    while a>0 do
-        local ra=a%2
-        if ra>0 then c=c+p end
-        a,p=(a-ra)/2,p*2
-    end
-    return c
-end
-
-function zombieZonesAIHandler.bit.Or(a,b)
-    local p,c=1,0
-    while a+b>0 do
-        local ra,rb=a%2,b%2
-        if ra+rb>0 then c=c+p end
-        a,b,p=(a-ra)/2,(b-rb)/2,p*2
-    end
-    return c
-end
-
-function zombieZonesAIHandler.bit.And(a,b)
-    local p,c=1,0
-    while a>0 and b>0 do
-        local ra,rb=a%2,b%2
-        if ra+rb>1 then c=c+p end
-        a,b,p=(a-ra)/2,(b-rb)/2,p*2
-    end
-    return c
-end
-
-function zombieZonesAIHandler.bit.Not(n)
-    local p,c=1,0
-    while n>0 do
-        local r=n%2
-        if r<1 then c=c+p end
-        n,p=(n-r)/2,p*2
-    end
-    return c
-end
-
-
 zombieZonesAIHandler.idMatrix = {trueID={}, hatFallen={}}
+
 ---@param zombie IsoZombie|IsoGameCharacter|IsoMovingObject|IsoObject
 function zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
-    local bit = zombieZonesAIHandler.bit
+
     local pID = zombie:getPersistentOutfitID()
 
-    local found = zombieZonesAIHandler.idMatrix.trueID[pID] or zombieZonesAIHandler.idMatrix.hatFallen[pID]
+    local found = zombieZonesAIHandler.idMatrix.trueID[pID] and pID or zombieZonesAIHandler.idMatrix.hatFallen[pID]
     if found then return found end
 
-    local neuteredID = math.abs(pID)
+    local bits = string.split(string.reverse(Long.toUnsignedString(pID, 2)), "")
+    while #bits < 16 do bits[#bits+1] = 0 end
 
-    local trueID = (bit.And(neuteredID,32768) ~= 0) and bit.And(neuteredID,-32769) or neuteredID
-    local hatID = bit.Or(trueID,32768)
+    -- trueID
+    bits[16] = 0
+    local trueID = Long.parseUnsignedLong(string.reverse(table.concat(bits, "")), 2)
+    zombieZonesAIHandler.idMatrix.trueID[trueID] = true
 
-    trueID = ((pID<0) and 0-trueID) or trueID
-
-    zombieZonesAIHandler.idMatrix.trueID[trueID] = trueID
-    zombieZonesAIHandler.idMatrix.hatFallen[hatID] = trueID
+    -- hatFallenID
+    bits[16] = 1
+    zombieZonesAIHandler.idMatrix.hatFallen[Long.parseUnsignedLong(string.reverse(table.concat(bits, "")), 2)] = trueID
 
     return trueID
 end
@@ -182,16 +135,8 @@ function zombieZonesAIHandler.onUpdate(zombie)
         --zombie:addLineChatElement("i:"..tostring(shouldBeActive).."  s:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand))
 
         local pID = zombie:getPersistentOutfitID()
-
         local tID = zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
-
-        local bits = Long.toBinaryString(pID); -- returns a string with 0 and 1's
-        local reordered = string.reverse(bits); -- if you wanna handle it that way, then swap the hat bit around however you wish (16th bit from the back?)
-        local modified = reordered-- whatever work you gotta do
-        local res = Long.toUnsignedInteger(string.reverse(modified), 2);
-        zombie:addLineChatElement(" -: "..reordered.."\n  : "..res.."\n")
-
-        --zombie:addLineChatElement(" -: "..pID.."\n  : "..tID.."\n")
+        zombie:addLineChatElement("  current: "..pID.."\n  trueID: "..tID.."\n")
     end
 end
 
