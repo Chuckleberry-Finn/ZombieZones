@@ -130,7 +130,7 @@ function zombieZonesAIHandler.onUpdate(zombie)
 
         if canCrawlUnderVehicle~=nil then zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle) end
     end
-
+--[[
     if getDebug() then
         --zombie:addLineChatElement("i:"..tostring(shouldBeActive).."  s:"..tostring(zombieModData.ZombieZonesSpeed).. "\npOID:"..(zombie:getPersistentOutfitID()).." r: "..tostring(zombieModData.ZombieZoneRand))
 
@@ -138,6 +138,7 @@ function zombieZonesAIHandler.onUpdate(zombie)
         local tID = zombieZonesAIHandler.getTruePersistentOutfitID(zombie)
         zombie:addLineChatElement("  current: "..pID.."\n  trueID: "..tID.."\n")
     end
+    --]]
 end
 
 return zombieZonesAIHandler

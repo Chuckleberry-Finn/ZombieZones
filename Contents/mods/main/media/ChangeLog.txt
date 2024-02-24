@@ -29,4 +29,5 @@
 
 [ 2/23/24 ]
 - Fix issues with outfit-ID handling (related to previous fix). Credit: Shurutsue
+- Removed internal debug test.
 [ ------ ]
