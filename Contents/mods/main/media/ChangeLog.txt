@@ -26,3 +26,7 @@
 [ 2/19/24 ]
 - Fix: Zombies hats falling off won't cause re-rolling zombie stats.
 [ ------]
+
+[ 2/23/24 ]
+- Fix issues with outfit-ID handling (related to previous fix). Credit: Shurutsue
+[ ------ ]
