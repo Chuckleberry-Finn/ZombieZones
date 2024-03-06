@@ -93,6 +93,12 @@ function zombieZonesAIHandler.onUpdate(zombie)
     if zombie:isReanimatedPlayer() then return end
     local zombieModData = zombie:getModData()
     local zone = zombieZonesAIHandler.getZone(zombie)
+    
+    local canCrawlUnderVehicle = SandboxVars.ZombieLore.CrawlUnderVehicle
+    if zone and zone.canCrawlUnderVehicle then
+        canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true)
+    end
+    zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
 
     local oldPersistentID = zombieModData.ZombieZonesPersistentID
     if oldPersistentID and oldPersistentID~=zombieZonesAIHandler.getTruePersistentOutfitID(zombie) then
@@ -124,11 +130,6 @@ function zombieZonesAIHandler.onUpdate(zombie)
             end
         end
         if zombieSpeed then zombie:setWalkType(zombieModData.ZombieZonesSpeed) end
-
-        local canCrawlUnderVehicle = nil
-        if zone and zone.canCrawlUnderVehicle then canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true) end
-
-        if canCrawlUnderVehicle~=nil then zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle) end
     end
 --[[
     if getDebug() then
