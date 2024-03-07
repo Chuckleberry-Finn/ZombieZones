@@ -31,3 +31,7 @@
 - Fix issues with outfit-ID handling (related to previous fix). Credit: Shurutsue
 - Removed internal debug test.
 [ ------ ]
+
+[ 3/6/24 ]
+- Made 'crawlundercars' option for zones not be persistent to zombie's origins.
+[ ------ ]

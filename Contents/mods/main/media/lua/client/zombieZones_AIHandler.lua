@@ -94,11 +94,12 @@ function zombieZonesAIHandler.onUpdate(zombie)
     local zombieModData = zombie:getModData()
     local zone = zombieZonesAIHandler.getZone(zombie)
     
-    local canCrawlUnderVehicle = SandboxVars.ZombieLore.CrawlUnderVehicle
     if zone and zone.canCrawlUnderVehicle then
-        canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true)
+        local canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true)
+        zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
+    else
+        zombie:initCanCrawlUnderVehicle()
     end
-    zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
 
     local oldPersistentID = zombieModData.ZombieZonesPersistentID
     if oldPersistentID and oldPersistentID~=zombieZonesAIHandler.getTruePersistentOutfitID(zombie) then
