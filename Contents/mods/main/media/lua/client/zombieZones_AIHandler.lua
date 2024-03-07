@@ -93,12 +93,17 @@ function zombieZonesAIHandler.onUpdate(zombie)
     if zombie:isReanimatedPlayer() then return end
     local zombieModData = zombie:getModData()
     local zone = zombieZonesAIHandler.getZone(zombie)
-    
+
     if zone and zone.canCrawlUnderVehicle then
+        zombieModData.inNoZone = false
         local canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true)
         zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
     else
-        zombie:initCanCrawlUnderVehicle()
+        local noZone = zombieModData.inNoZone
+        if not noZone then
+            zombieModData.inNoZone = true
+            zombie:initCanCrawlUnderVehicle()
+        end
     end
 
     local oldPersistentID = zombieModData.ZombieZonesPersistentID
