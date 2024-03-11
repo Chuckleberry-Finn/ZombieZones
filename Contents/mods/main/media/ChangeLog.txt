@@ -35,3 +35,7 @@
 [ 3/6/24 ]
 - Made 'crawlundercars' option for zones not be persistent to zombie's origins.
 [ ------ ]
+
+[ 3/11/24 ]
+- Tweaked how 'crawlundercars' option is handled.
+[ ------ ]
