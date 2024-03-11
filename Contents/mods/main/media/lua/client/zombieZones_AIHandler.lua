@@ -95,13 +95,13 @@ function zombieZonesAIHandler.onUpdate(zombie)
     local zone = zombieZonesAIHandler.getZone(zombie)
 
     if zone and zone.canCrawlUnderVehicle then
-        zombieModData.inNoZone = false
+        zombieModData.inZone = true
         local canCrawlUnderVehicle = (zone.canCrawlUnderVehicle=="false" and false) or (zone.canCrawlUnderVehicle=="true" and true)
         zombie:setCanCrawlUnderVehicle(canCrawlUnderVehicle)
     else
-        local noZone = zombieModData.inNoZone
-        if not noZone then
-            zombieModData.inNoZone = true
+        local wasInZone = zombieModData.inNoZone
+        if wasInZone then
+            zombieModData.inZone = false
             zombie:initCanCrawlUnderVehicle()
         end
     end
