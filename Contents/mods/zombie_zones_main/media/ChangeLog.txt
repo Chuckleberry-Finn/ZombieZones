@@ -39,3 +39,12 @@
 [ 3/11/24 ]
 - Tweaked how 'crawlundercars' option is handled.
 [ ------ ]
+[ 11/1/26 ]
+- Build 42 support. Requires Zone API Chucked (B42).
+- Zone type registered from shared/, edit capability is ManipulateZombie.
+- Fix: zombies leaving a zone now reset their crawl-under-vehicle setting.
+- Fix: zones with all speed weights at 0 no longer re-roll every update.
+- Fix: speed roll uses a fixed order so results match between clients.
+- Day/night activity only overrides the sandbox setting when a zone disagrees with it.
+- Walk type changes update the B42 speed type (sprinter behaviour/sounds).
+[ ------ ]

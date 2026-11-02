@@ -1,0 +1,51 @@
+[ 1/6/24 ]
+- Update: Fixed day/night activity overnight calculations.
+[ ------ ]
+
+[ 1/6/24 - hotfix1 ]
+- Hotfix: daytime/night time checks.
+[ ------ ]
+
+[ 1/10/24 ]
+- Fix: Removing leftover stuff from exclusivity.
+[ ------ ]
+
+[ 1/11/24 ]
+- Fix: Zombies leaving/entering zones will not change behaviors.
+[ ------ ]
+
+[ 1/19/24 ]
+- Fix text scaling issue in UI.
+[ ------ ]
+
+[ 2/18/24 ]
+- Removed internal debug test.
+- Removed old file.
+[ ------ ]
+
+[ 2/19/24 ]
+- Fix: Zombies hats falling off won't cause re-rolling zombie stats.
+[ ------]
+
+[ 2/23/24 ]
+- Fix issues with outfit-ID handling (related to previous fix). Credit: Shurutsue
+- Removed internal debug test.
+[ ------ ]
+
+[ 3/6/24 ]
+- Made 'crawlundercars' option for zones not be persistent to zombie's origins.
+[ ------ ]
+
+[ 3/11/24 ]
+- Tweaked how 'crawlundercars' option is handled.
+[ ------ ]
+
+[ 11/2/26 ]
+- Build 42 support. Requires Zone API Chucked (B42).
+- Zone type registered from shared/, edit capability is ManipulateZombie.
+- Fix: zombies leaving a zone now reset their crawl-under-vehicle setting.
+- Fix: zones with all speed weights at 0 no longer re-roll every update.
+- Fix: speed roll uses a fixed order so results match between clients.
+- Day/night activity only overrides the sandbox setting when a zone disagrees with it.
+- Walk type changes update the B42 speed type (sprinter behaviour/sounds).
+[ ------ ]
